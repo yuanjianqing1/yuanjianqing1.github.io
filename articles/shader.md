@@ -1,11 +1,11 @@
 
-跟随原文复习了一下game101辐射度量学的相关内容，还有对BRDF做了一些补充学习
+I went through the original text to review the radiometry part of GAMES101, and also did some extra reading on BRDFs.
 
 ![](https://pic1.zhimg.com/80/v2-9e3e3e4b71164a24b95cd44d9645cf0f_720w.jpg?source=ccfced1a)
 
 添加图片注释，不超过 140 字（可选）
 
-然后我想复刻一下原文中的shader。原文中的shader是GLSL写的，我把他写成了CG语言。
+Then I wanted to recreate the shader from the original text. It was originally written in GLSL, so I ported it over to Cg.
 
 Shader "Custom/BRDF"
 {
@@ -274,10 +274,10 @@ Shader "Custom/BRDF"
 }
 
 
-是这个代码的原理并不难理解，主要是对辐射度量学的理解，还有求积分利用黎曼积分转化成近似值的形式。
+Actually, the logic behind this code isn't hard to understand. It mostly comes down to grasping radiometry and using a Riemann sum to approximate the integral.
 
-我在写代码过程中遇到的主要问题是unity对光源支持比较麻烦，ForwaBase只支持一盏主要的光源，也有可能是我不知道怎么使用其他的光源。Vertex虽然支持4盏，但是效果比较差。我最终是在代码中自定义光源位置和数量来实现多点光源。最终效果如下图：
+The main issue I ran into while coding was Unity's clunky lighting support—the ForwardBase pass only supports a single main directional light (or maybe I just haven't figured out how to access the others yet). The Vertex pass supports up to four, but the visual quality is pretty rough. In the end, I hardcoded custom light positions and counts directly in the shader to implement multiple point lights. Here is the final result:
 
 ![](https://pic1.zhimg.com/80/v2-ed3ae597d5e78003b0524c3e0f6f746f_720w.png?source=ccfced1a)
 
-上到下金属性减弱，左到右粗糙度减小
+Metallic decreases from top to bottom, and roughness decreases from left to right.
